@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Portal de Alumnos | Hub Central {% endblock %}
+
+{% block main %}
+
+    <header class="px-8 lg:px-20 py-10 border-b border-white/5 bg-secondary">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <nav class="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">
+                <a href="{% url 'base' %}" class="hover:text-primary transition-colors">Inicio</a>
+                <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+                <span class="text-primary">Portal Alumnos</span>
+            </nav>
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden sm:block">
+                    <p class="font-serif font-bold text-sm text-white tracking-wide">Admin Portal</p>
+                    <p class="text-[9px] text-primary uppercase tracking-widest">admin@hubcentral.edu</p>
+                </div>
+                <div class="h-10 w-10 rounded-full border border-primary/50 overflow-hidden ring-2 ring-primary/10">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCHQgx0WrjMmFHaYJafFGFHB9DVqSKW0acxwrwC6BwMG42Ve8OjBQkXsXTSAMo8sqUIzujB5xv-kiQvk21-SpNXQvGEJ9p7_l0oPXTaz6QXuNwWBHAGk0Ac4PzfL_aRZ7tLdzPFakR8Nj3Y8ms5awuKuYN-qYx8g8zbnu7waLJf1mP49BPZjEPeEQLUv76E5YdBAp5XS4T2gwKGeTpdl7GwaOG7YFierqnPZQnHUpnxL7F07pJkxWh76KtYasmqf9m0rZS5dnSsYlD"
+                         alt="Admin" class="object-cover">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-[1400px] mx-auto px-8 py-12">
+
+        <div class="mb-12">
+            <button onclick="window.location.href='{% url 'base' %}'"
+                    class="flex items-center gap-2 text-[#d4ac31] hover:text-white font-bold text-[10px] uppercase tracking-[0.2em] mb-8 transition-all group">
+                <span class="material-symbols-outlined text-[18px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                Volver al Inicio
+            </button>
+
+            <div class="flex flex-col gap-2">
+                <h1 class="text-5xl font-serif font-bold text-secondary dark:text-white tracking-tight">
+                    Gestión del Portal Estudiantil
+                </h1>
+                <p class="text-slate-500 dark:text-slate-400 text-sm uppercase tracking-[0.1em]">
+                    Panel de administración, registro y seguimiento académico.
+                </p>
+            </div>
+        </div>
+
+        <!-- card -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+
+            <div class="relative overflow-hidden bg-[#064e3b] border border-white/10 p-8 shadow-2xl group transition-all hover:-translate-y-1">
+                <div class="absolute -right-4 -top-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span class="material-symbols-outlined text-[100px] text-white">group</span>
+                </div>
+                <div class="relative z-10">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="size-10 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+                            <span class="material-symbols-outlined text-[#10b981]">group</span>
+                        </div>
+                        <span class="bg-[#10b981] text-white text-[9px] font-black px-2 py-0.5 tracking-tighter shadow-lg">+5.2%</span>
+                    </div>
+                    <p class="text-[10px] font-bold text-emerald-400/60 uppercase tracking-[0.2em] mb-1">Total de
+                        Estudiantes</p>
+                    <p class="text-4xl font-serif font-bold text-white tracking-tight">1,250</p>
+                </div>
+            </div>
+
+            <div class="relative overflow-hidden bg-gradient-to-br from-[#065f46] to-[#064e3b] border border-white/10 p-8 shadow-2xl group transition-all hover:-translate-y-1">
+                <div class="absolute -right-4 -top-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span class="material-symbols-outlined text-[100px] text-white">person_add</span>
+                </div>
+                <div class="relative z-10">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="size-10 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+                            <span class="material-symbols-outlined text-[#10b981]">person_add</span>
+                        </div>
+                        <span class="bg-white text-[#064e3b] text-[9px] font-black px-2 py-0.5 tracking-tighter shadow-lg">+12%</span>
+                    </div>
+                    <p class="text-[10px] font-bold text-emerald-400/60 uppercase tracking-[0.2em] mb-1">Admisiones
+                        Recientes</p>
+                    <p class="text-4xl font-serif font-bold text-white tracking-tight">48</p>
+                </div>
+            </div>
+
+            <div class="relative overflow-hidden bg-[#064e3b] border border-white/10 p-8 shadow-2xl group transition-all hover:-translate-y-1">
+                <div class="absolute -right-4 -top-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span class="material-symbols-outlined text-[100px] text-white">school</span>
+                </div>
+                <div class="relative z-10">
+                    <div class="mb-6">
+                        <div class="size-10 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+                            <span class="material-symbols-outlined text-[#d4ac31]">school</span>
+                        </div>
+                    </div>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">Programas
+                        Activos</p>
+                    <p class="text-4xl font-serif font-bold text-white tracking-tight">14</p>
+                </div>
+            </div>
+
+            <div class="relative overflow-hidden bg-[#d4ac31] border border-black/5 p-8 shadow-2xl group transition-all hover:-translate-y-1">
+                <div class="absolute -right-4 -top-4 opacity-20 group-hover:opacity-30 transition-opacity">
+                    <span class="material-symbols-outlined text-[100px] text-[#064e3b]">pending_actions</span>
+                </div>
+                <div class="relative z-10">
+                    <div class="mb-6">
+                        <div class="size-10 bg-black/10 backdrop-blur-md flex items-center justify-center border border-black/10">
+                            <span class="material-symbols-outlined text-[#064e3b]">pending_actions</span>
+                        </div>
+                    </div>
+                    <p class="text-[10px] font-bold text-[#064e3b]/70 uppercase tracking-[0.2em] mb-1">Solicitudes
+                        Pendientes</p>
+                    <p class="text-4xl font-serif font-bold text-[#064e3b] tracking-tight">23</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- seccion registro alumno -->
+        <secction>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                <a href="{% url 'agregar_alumno' %}"
+                   class="bg-secondary p-10 shadow-2xl transition-all hover:-translate-y-2 hover:shadow-emerald-900/20 group relative overflow-hidden">
+                    <div class="absolute right-0 top-0 opacity-10 translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-[160px] text-white">how_to_reg</span>
+                    </div>
+                    <div class="relative z-10 flex flex-col h-full justify-between gap-8">
+                        <div class="flex items-center gap-6">
+                            <div class="size-16 bg-white/10 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-4xl text-primary">person_add</span>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-serif font-bold text-white mb-2 tracking-wide">Registro de
+                                    Estudiantes</h3>
+                                <p class="text-slate-300 text-xs uppercase tracking-widest leading-loose">Inscribir un
+                                    nuevo alumno en el sistema central.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 bg-white text-secondary font-black px-8 py-4 uppercase tracking-[0.2em] text-[11px] self-end group-hover:bg-primary group-hover:text-white transition-all">
+                            <span class="material-symbols-outlined text-[18px]">add</span>
+                            Nueva Inscripción
+                        </div>
+                    </div>
+                </a>
+
+                <a href="{% url 'lista_alumnos' %}"
+                   class="bg-[#d4ac31] p-10 shadow-2xl transition-all hover:-translate-y-2 hover:shadow-amber-900/20 group relative overflow-hidden">
+                    <div class="absolute right-0 top-0 opacity-10 translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-[160px] text-secondary">list_alt</span>
+                    </div>
+                    <div class="relative z-10 flex flex-col h-full justify-between gap-8">
+                        <div class="flex items-center gap-6">
+                            <div class="size-16 bg-black/10 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-4xl text-secondary">group</span>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-serif font-bold text-secondary mb-2 tracking-wide">Gestión de
+                                    Alumnos</h3>
+                                <p class="text-secondary/70 text-xs uppercase tracking-widest leading-loose">Consulta y
+                                    administra la base de datos completa.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 bg-secondary text-white font-black px-8 py-4 uppercase tracking-[0.2em] text-[11px] self-end hover:bg-black transition-all">
+                            <span class="material-symbols-outlined text-[18px]">visibility</span>
+                            Ver Listado Completo
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="px-8 py-8 bg-[#064e3b] border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex flex-wrap items-center gap-4">
+
+                    <a href="{% url 'lista_alumnos' %}"
+                       class="flex items-center gap-3 bg-[#10b981] hover:bg-[#059669] text-white text-[11px] font-bold uppercase tracking-[0.2em] py-3.5 px-6 transition-all shadow-lg active:scale-95">
+                        <span class="material-symbols-outlined text-[18px]">format_list_bulleted</span>
+                        Listado alumnos
+                    </a>
+
+                    <a href="{% url 'agregar_alumno' %}"
+                       class="flex items-center gap-3 bg-[#064e3b] hover:bg-white/5 text-[#d4ac31] text-[11px] font-bold uppercase tracking-[0.2em] py-3.5 px-6 transition-all border-2 border-[#d4ac31]/50 hover:border-[#d4ac31]">
+                        <span class="material-symbols-outlined text-[18px]">add_circle</span>
+                        Nuevo Registro
+                    </a>
+                </div>
+        </secction>
+        <!-- seccion footer alumno -->
+        <div class="flex items-center gap-6">
+            <div class="hidden lg:block text-right">
+                <p class="text-[10px] font-bold text-emerald-400/60 uppercase tracking-[0.2em]">Estado del Sistema</p>
+                <p class="text-xl font-serif font-bold text-white leading-none">Módulo Alumnos</p>
+            </div>
+
+            <a href="{% url 'base' %}"
+               class="flex items-center gap-3 bg-[#d4ac31] hover:bg-[#b89528] text-[#064e3b] text-[11px] font-black uppercase tracking-[0.2em] py-3.5 px-8 transition-all shadow-xl hover:-translate-y-1">
+                <span class="material-symbols-outlined text-[20px]">home</span>
+                Dashboard Principal
+            </a>
+        </div>
+
+    </div>
+    </div>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+
+        .font-serif {
+            font-family: 'Playfair+Display', serif;
+        }
+
+        .btn-quick {
+            @apply flex items-center gap-3 px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:border-primary hover:text-primary active:scale-95;
+        }
+    </style>
+
+{% endblock %}

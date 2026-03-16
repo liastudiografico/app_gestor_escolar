@@ -1,0 +1,40 @@
+{% extends 'login.html' %}
+{% block main %}
+<main class="flex-grow flex items-center justify-center px-6 py-12">
+<div class="max-w-[600px] w-full flex flex-col items-center text-center">
+<!-- Hero Icon/Illustration Section -->
+<div class="relative mb-8">
+<div class="w-32 h-32 bg-primary/10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-6xl">dns</span>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-white dark:bg-slate-900 p-2 rounded-full shadow-lg border border-slate-100 dark:border-slate-800">
+<span class="material-symbols-outlined text-amber-500 text-3xl">warning</span>
+</div>
+</div>
+<!-- Error Details -->
+<h1 class="text-primary tracking-tight text-7xl font-bold mb-2">500</h1>
+<h2 class="text-slate-900 dark:text-slate-100 text-2xl md:text-3xl font-bold leading-tight tracking-tight mb-4">
+                Algo salió mal en nuestros servidores
+            </h2>
+<p class="text-slate-600 dark:text-slate-400 text-base md:text-lg font-normal leading-relaxed mb-10 max-w-[500px]">
+                Lo sentimos, el Sistema de Gestión Escolar (SGE) ha experimentado un error técnico inesperado. Nuestro equipo de IT ya ha sido notificado automáticamente y está trabajando para solucionarlo lo antes posible.
+            </p>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row gap-4 w-full justify-center items-center">
+<button class="flex h-12 items-center justify-center rounded-lg bg-primary text-white px-8 text-base font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 min-w-[180px]">
+<span class="material-symbols-outlined mr-2">refresh</span>
+                    Reintentar
+                </button>
+<a href="{% url 'contacto' %}" class="flex h-12 items-center justify-center rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 px-8 text-base font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all min-w-[180px]" href="#">
+<span class="material-symbols-outlined mr-2">support_agent</span>
+                    Contactar Soporte IT
+                </a>
+</div>
+<!-- Decorative Element -->
+<div class="mt-16 w-full opacity-50">
+<div class="h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent w-full"></div>
+</div>
+</div>
+</main>
+    
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Editar Alumno | Hub Central {% endblock %}
+
+{% block main %}
+
+<div class="max-w-2xl mx-auto px-6 py-12">
+
+    <nav class="flex items-center gap-2 text-[10px] font-bold text-slate-400 mb-8 uppercase tracking-[0.2em]">
+        <a class="hover:text-primary transition-colors" href="{% url 'base' %}">Inicio</a>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <a class="hover:text-primary transition-colors" href="{% url 'portalalumnos' %}">Alumnos</a>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <a class="hover:text-primary transition-colors" href="{% url 'lista_alumnos' %}">Listado</a>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <span class="text-secondary dark:text-primary">Editar — {{ alumno.nombre }} {{ alumno.apellido }}</span>
+    </nav>
+
+    <div class="mb-10 flex items-center gap-4">
+        <div class="size-12 bg-secondary dark:bg-primary flex items-center justify-center text-white dark:text-secondary shadow-xl shadow-secondary/10">
+            <span class="material-symbols-outlined">edit_note</span>
+        </div>
+        <div>
+            <h1 class="text-2xl font-serif font-bold text-secondary dark:text-white uppercase tracking-tight">Editar Alumno</h1>
+            <p class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-widest mt-1">Modifica los campos necesarios y guarda los cambios.</p>
+        </div>
+    </div>
+
+    <div class="bg-secondary dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-xl p-8 backdrop-blur-sm">
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="space-y-8">
+
+                <div>
+                    <label class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-white dark:text-slate-300 mb-3">
+                        <span class="material-symbols-outlined text-[16px] text-primary">badge</span>
+                        RUT (Identificador Único)
+                    </label>
+                    <input type="text"
+                           name="rut"
+                           value="{{ alumno.rut }}"
+                           readonly
+                           class="w-full px-4 py-4 border border-white/10 text-sm bg-black/20 text-slate-400 cursor-not-allowed italic tracking-widest focus:outline-none">
+                    <p class="mt-2 text-[10px] text-slate-400 flex items-center gap-1 uppercase tracking-wider">
+                        <span class="material-symbols-outlined text-[14px]">info</span>
+                        El RUT es la clave del registro y no puede modificarse.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                    <div>
+                        <label for="{{ form.nombre.id_for_label }}"
+                               class="flex items-center gap-1.5 text-sm font-semibold text-white dark:text-slate-300 mb-2">
+                            <span class="material-symbols-outlined text-[16px] text-primary">person</span>
+                            {{ form.nombre.label }}
+                        </label>
+                        <input type="text"
+                               name="nombre"
+                               id="{{ form.nombre.id_for_label }}"
+                               value="{{ form.nombre.value|default:'' }}"
+                               placeholder="Nombre del alumno"
+                               class="w-full px-4 py-3 border text-sm
+                                      {% if form.nombre.errors %}border-red-400 bg-red-900/10
+                                      {% else %}border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800{% endif %}
+                                      text-slate-900 dark:text-white placeholder-slate-400
+                                      focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                        {% if form.nombre.errors %}
+                            <p class="mt-1.5 text-xs text-red-500 flex items-center gap-1 font-bold uppercase tracking-tighter">
+                                <span class="material-symbols-outlined text-[14px]">error</span>
+                                {{ form.nombre.errors|join:", " }}
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.apellido.id_for_label }}"
+                               class="flex items-center gap-1.5 text-sm font-semibold text-white dark:text-slate-300 mb-2">
+                            <span class="material-symbols-outlined text-[16px] text-primary">person</span>
+                            {{ form.apellido.label }}
+                        </label>
+                        <input type="text"
+                               name="apellido"
+                               id="{{ form.apellido.id_for_label }}"
+                               value="{{ form.apellido.value|default:'' }}"
+                               placeholder="Apellido del alumno"
+                               class="w-full px-4 py-3 border text-sm
+                                      {% if form.apellido.errors %}border-red-400 bg-red-900/10
+                                      {% else %}border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800{% endif %}
+                                      text-slate-900 dark:text-white placeholder-slate-400
+                                      focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                        {% if form.apellido.errors %}
+                            <p class="mt-1.5 text-xs text-red-500 flex items-center gap-1 font-bold uppercase tracking-tighter">
+                                <span class="material-symbols-outlined text-[14px]">error</span>
+                                {{ form.apellido.errors|join:", " }}
+                            </p>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+                <div>
+                    <label for="{{ form.fecha_nacimiento.id_for_label }}"
+                           class="flex items-center gap-1.5 text-sm font-semibold text-white dark:text-slate-300 mb-2">
+                        <span class="material-symbols-outlined text-[16px] text-primary">calendar_today</span>
+                        {{ form.fecha_nacimiento.label }}
+                    </label>
+                    <input type="text"
+                           name="fecha_nacimiento"
+                           id="{{ form.fecha_nacimiento.id_for_label }}"
+                           value="{{ form.fecha_nacimiento.value|default:'' }}"
+                           placeholder="DD/MM/AAAA"
+                           class="w-full px-4 py-3 border text-sm
+                                  {% if form.fecha_nacimiento.errors %}border-red-400 bg-red-900/10
+                                  {% else %}border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800{% endif %}
+                                  text-slate-900 dark:text-white placeholder-slate-400
+                                  focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                    {% if form.fecha_nacimiento.errors %}
+                        <p class="mt-1.5 text-xs text-red-500 flex items-center gap-1 font-bold uppercase tracking-tighter">
+                            <span class="material-symbols-outlined text-[14px]">error</span>
+                            {{ form.fecha_nacimiento.errors|join:", " }}
+                        </p>
+                    {% endif %}
+                </div>
+
+                {% if form.non_field_errors %}
+                <div class="bg-red-900/20 border border-red-500/50 p-4 flex items-start gap-3">
+                    <span class="material-symbols-outlined text-red-500 text-[20px] shrink-0">gpp_bad</span>
+                    <div>
+                        <p class="text-sm font-semibold text-red-400">Error en el formulario</p>
+                        <p class="text-xs text-red-300 mt-0.5">{{ form.non_field_errors|join:", " }}</p>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 mt-10 pt-8 border-t border-white/10">
+                <button type="submit"
+                        class="flex-1 flex items-center justify-center gap-3 bg-[#10b981] hover:bg-[#059669] text-white font-bold py-4 px-6 uppercase tracking-[0.2em] text-[11px] transition-all shadow-lg active:scale-95 hover:shadow-[#10b981]/20">
+                    <span class="material-symbols-outlined text-[18px]">save</span>
+                    Guardar Cambios
+                </button>
+
+                <a href="{% url 'detalle_alumno' alumno.rut %}"
+                   class="flex items-center justify-center gap-3 bg-transparent hover:bg-white/5 text-[#d4ac31] text-[11px] font-bold uppercase tracking-[0.2em] py-3.5 px-8 transition-all border border-[#d4ac31]">
+                    <span class="material-symbols-outlined text-[18px]">close</span>
+                    Cancelar
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+    .font-serif { font-family: 'Playfair+Display', serif; }
+</style>
+
+{% endblock %}

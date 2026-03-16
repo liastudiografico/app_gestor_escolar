@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Detalle del Profesor | Hub Central {% endblock %}
+
+{% block main %}
+
+<div class="max-w-2xl mx-auto px-6 py-12">
+
+    <nav class="flex items-center gap-2 text-[10px] font-bold text-slate-400 mb-8 uppercase tracking-[0.2em]">
+        <a class="hover:text-primary transition-colors" href="{% url 'base' %}">Inicio</a>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <a class="hover:text-primary transition-colors" href="{% url 'portal_profesores' %}">Profesores</a>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <span class="text-secondary dark:text-primary">Ficha Docente</span>
+    </nav>
+
+    <div class="mb-10 flex items-center gap-4">
+        <div class="size-12 bg-secondary dark:bg-primary flex items-center justify-center text-white dark:text-secondary shadow-xl shadow-secondary/10">
+            <span class="material-symbols-outlined">person_pin</span>
+        </div>
+        <div>
+            <h1 class="text-2xl font-serif font-bold text-secondary dark:text-white uppercase tracking-tight">Ficha del Profesor</h1>
+            <p class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-widest mt-1">Información completa del docente.</p>
+        </div>
+    </div>
+
+    <div class="bg-secondary dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden backdrop-blur-sm mb-10">
+
+        <div class="px-8 py-6 border-b border-white/5 flex items-center gap-5 bg-black/10">
+            <div class="size-16 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center shrink-0">
+                <span class="text-primary text-xl font-black uppercase tracking-tighter">
+                    {{ profesor.nombre|first }}{{ profesor.apellido|first }}
+                </span>
+            </div>
+            <div>
+                <h2 class="text-xl font-serif font-bold text-white tracking-wide">
+                    {{ profesor.nombre }} {{ profesor.apellido }}
+                </h2>
+                <div class="flex items-center gap-2 mt-1">
+                    <span class="size-2 rounded-full bg-[#10b981] animate-pulse"></span>
+                    <p class="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em]">Docente Activo</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="divide-y divide-white/5">
+            <div class="px-8 py-5 flex items-center justify-between group hover:bg-white/5 transition-colors">
+                <div class="flex items-center gap-4">
+                    <span class="material-symbols-outlined text-primary text-[20px]">badge</span>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">RUT</span>
+                </div>
+                <span class="text-sm font-bold text-white tracking-widest">{{ profesor.rut }}</span>
+            </div>
+            <div class="px-8 py-5 flex items-center justify-between group hover:bg-white/5 transition-colors">
+                <div class="flex items-center gap-4">
+                    <span class="material-symbols-outlined text-primary text-[20px]">person</span>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Nombre</span>
+                </div>
+                <span class="text-sm font-bold text-white">{{ profesor.nombre }}</span>
+            </div>
+            <div class="px-8 py-5 flex items-center justify-between group hover:bg-white/5 transition-colors">
+                <div class="flex items-center gap-4">
+                    <span class="material-symbols-outlined text-primary text-[20px]">group</span>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Apellido</span>
+                </div>
+                <span class="text-sm font-bold text-white">{{ profesor.apellido }}</span>
+            </div>
+            <div class="px-8 py-5 flex items-center justify-between group hover:bg-white/5 transition-colors">
+                <div class="flex items-center gap-4">
+                    <span class="material-symbols-outlined text-primary text-[20px]">calendar_today</span>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Fecha Nacimiento</span>
+                </div>
+                <span class="text-sm font-bold text-white">{{ profesor.fecha_nacimiento|date:"d/m/Y" }}</span>
+            </div>
+            <div class="px-8 py-5 flex items-center justify-between group hover:bg-white/5 transition-colors">
+                <div class="flex items-center gap-4">
+                    <span class="material-symbols-outlined text-primary text-[20px]">school</span>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Profesión</span>
+                </div>
+                <span class="text-sm font-bold text-white">{{ profesor.profesion }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-secondary dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden backdrop-blur-sm mb-10 p-8">
+        <h3 class="text-[11px] font-bold text-white uppercase tracking-widest mb-6 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[18px]">book</span> Cursos Asignados
+        </h3>
+        {% if profesor.cursos.all %}
+            <ul class="space-y-3">
+                {% for curso in profesor.cursos.all %}
+                <li class="flex items-center justify-between bg-black/10 p-4 rounded-lg">
+                    <span class="text-sm text-slate-200 font-semibold">{{ curso.nombre }}</span>
+                    <span class="text-[10px] font-bold text-primary tracking-widest uppercase">#{{ curso.codigo }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-xs text-slate-500 italic">No hay cursos asignados.</p>
+        {% endif %}
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-4">
+        <a href="{% url 'editar_profesor' profesor.rut %}"
+           class="flex-1 flex items-center justify-center gap-3 bg-[#10b981] hover:bg-[#059669] text-white font-bold py-4 px-6 uppercase tracking-[0.2em] text-[11px] transition-all shadow-lg active:scale-95">
+            <span class="material-symbols-outlined text-[18px]">edit</span> Editar Ficha
+        </a>
+        <a href="{% url 'eliminar_profesor' profesor.rut %}"
+           class="flex-1 flex items-center justify-center gap-3 bg-transparent hover:bg-red-500/10 text-red-500 font-bold py-4 px-6 border border-red-500/50 uppercase tracking-[0.2em] text-[11px] transition-all">
+            <span class="material-symbols-outlined text-[18px]">delete</span> Eliminar
+        </a>
+        <a href="{% url 'lista_profesores' %}"
+           class="flex items-center gap-3 bg-transparent hover:bg-white/5 text-[#d4ac31] text-[11px] font-bold uppercase tracking-[0.2em] py-3.5 px-8 transition-all border border-[#d4ac31]">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span> Volver
+        </a>
+    </div>
+</div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+    .font-serif { font-family: 'Playfair+Display', serif; }
+</style>
+
+{% endblock %}

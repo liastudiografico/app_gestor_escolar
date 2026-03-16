@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Eliminar Curso | Hub Central {% endblock %}
+
+{% block main %}
+
+<div class="max-w-2xl mx-auto px-6 py-12">
+
+    <nav class="flex items-center gap-2 text-[10px] font-bold text-slate-400 mb-8 uppercase tracking-[0.2em]">
+        <a class="hover:text-primary transition-colors" href="{% url 'base' %}">Inicio</a>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <a class="hover:text-primary transition-colors" href="{% url 'portal_cursos' %}">Cursos</a>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <a class="hover:text-primary transition-colors" href="{% url 'lista_cursos' %}">Listado</a>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <span class="text-red-500 font-black">Eliminar Curso</span>
+    </nav>
+
+    <div class="mb-10 flex items-center gap-4">
+        <div class="size-12 bg-red-600 flex items-center justify-center text-white shadow-xl shadow-red-900/20">
+            <span class="material-symbols-outlined">book_off</span>
+        </div>
+        <div>
+            <h1 class="text-2xl font-serif font-bold text-secondary dark:text-white uppercase tracking-tight">Confirmar Eliminación</h1>
+            <p class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-widest mt-1">Esta acción es irreversible.</p>
+        </div>
+    </div>
+
+    <div class="bg-red-900 border-l-4 border-red-500 p-6 flex items-start gap-5 mb-8 backdrop-blur-sm">
+        <span class="material-symbols-outlined text-red-500 text-[32px] shrink-0">report_problem</span>
+        <div>
+            <p class="text-[11px] font-black text-red-400 uppercase tracking-[0.2em] mb-1">Advertencia de Seguridad</p>
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Está a punto de borrar de forma definitiva el curso:
+                <span class="text-white font-bold">{{ curso.nombre }}</span>.
+            </p>
+        </div>
+    </div>
+
+    {% with total_alumnos=curso.total_alumnos %}
+        {% if total_alumnos > 0 %}
+            <div class="bg-amber-900 border border-amber-500/30 p-6 flex items-start gap-5 mb-8">
+                <span class="material-symbols-outlined text-amber-500 text-[32px] shrink-0">person_off</span>
+                <div>
+                    <p class="text-[11px] font-black text-amber-500 uppercase tracking-[0.2em] mb-1">Impacto Académico</p>
+                    <p class="text-sm text-amber-200/80 leading-relaxed">
+                        {{ total_alumnos }} alumno{{ total_alumnos|pluralize:"s" }} quedará{{ total_alumnos|pluralize:"n" }} desinscrito{{ total_alumnos|pluralize:"s" }}.
+                        No serán eliminados del sistema, solo se desvincularán de este curso.
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="bg-secondary dark:bg-slate-900/50 border border-white/5 shadow-2xl overflow-hidden mb-10">
+        <div class="px-8 py-6 border-b border-white/5 flex items-center gap-4 bg-black/20">
+            <div class="size-14 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center shrink-0">
+                <span class="text-red-500 text-lg font-black uppercase">{{ curso.nombre|first }}</span>
+            </div>
+            <div>
+                <h2 class="text-lg font-serif font-bold text-white tracking-wide">{{ curso.nombre }}</h2>
+                <span class="inline-flex items-center gap-1.5 text-[9px] font-black text-red-400 uppercase tracking-[0.2em]">
+                    <span class="size-1.5 rounded-full bg-red-500 animate-pulse"></span> Pendiente de Baja
+                </span>
+            </div>
+        </div>
+
+        <div class="divide-y divide-white/5">
+            <div class="px-8 py-4 flex justify-between hover:bg-white/5 transition-colors">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Código</span>
+                <span class="text-sm font-mono font-bold text-white tracking-widest">#{{ curso.codigo }}</span>
+            </div>
+            <div class="px-8 py-4 flex justify-between hover:bg-white/5 transition-colors">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Profesor Asignado</span>
+                <span class="text-sm font-bold text-white">{% if curso.profesor %}{{ curso.profesor.nombre }} {{ curso.profesor.apellido }}{% else %}Sin asignar{% endif %}</span>
+            </div>
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="flex flex-col sm:flex-row gap-4">
+            <button type="submit"
+                    class="flex-1 flex items-center justify-center gap-3 bg-red-600 hover:bg-red-500 text-white font-bold py-4 px-6 uppercase tracking-[0.2em] text-[11px] transition-all shadow-lg active:scale-95">
+                <span class="material-symbols-outlined text-[20px]">delete_forever</span>
+                Confirmar Eliminación
+            </button>
+
+            <a href="{% url 'detalle_curso' curso.codigo %}"
+               class="flex items-center justify-center gap-3 bg-transparent hover:bg-white/5 text-[#d4ac31] text-[11px] font-bold uppercase tracking-[0.2em] py-3.5 px-8 transition-all border border-[#d4ac31]">
+                <span class="material-symbols-outlined text-[20px]">keyboard_return</span>
+                Volver Atrás
+            </a>
+        </div>
+    </form>
+</div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+    .font-serif { font-family: 'Playfair+Display', serif; }
+</style>
+
+{% endblock %}

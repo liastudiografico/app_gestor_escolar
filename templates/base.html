@@ -1,0 +1,682 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>{% block titulo %}Hub Central{% endblock %}</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d4af37",
+                        "secondary": "#064e3b",
+                        "dark-emerald": "#022c22",
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="dark:bg-dark-emerald overflow-x-hidden antialiased">
+<div class="relative flex min-h-screen w-full flex-col">
+    <header class="sticky top-0 z-50 w-full border-b border-primary/20 bg-white/80 dark:bg-dark-emerald/90 backdrop-blur-xl transition-colors">
+        <div class="max-w-[1400px] mx-auto px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-5">
+                <div class="w-12 h-12 flex items-center justify-center bg-secondary dark:bg-primary rounded-sm shadow-lg transition-colors">
+                    <span class="material-symbols-outlined text-white dark:text-secondary text-2xl">architecture</span>
+                </div>
+                <div class="flex flex-col">
+                    <h1 class="text-lg font-bold tracking-[0.2em] text-secondary dark:text-primary uppercase leading-none">
+                        Hub Central</h1>
+                    <span class="text-[9px] uppercase tracking-[0.4em] font-semibold text-slate-500 dark:text-slate-400 mt-1">Ecosistema Institucional</span>
+                </div>
+            </div>
+
+            <nav class="hidden lg:flex items-center gap-10">
+                <a class="text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-300 hover:text-primary transition-colors"
+                   href="{% url 'base' %}">Inicio</a>
+                <a class="text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-300 hover:text-primary transition-colors"
+                   href="{% url 'portalalumnos' %}">Alumnos</a>
+                <a class="text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-300 hover:text-primary transition-colors"
+                   href="{% url 'portal_cursos' %}">Cursos</a>
+                <a class="text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-300 hover:text-primary transition-colors"
+                   href="{% url 'portal_profesores' %}">Profesores</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <button class="p-2 text-secondary dark:text-primary hover:scale-110 transition-transform"
+                        id="theme-toggle" title="Cambiar modo">
+                    <span class="material-symbols-outlined dark:hidden">dark_mode</span>
+                    <span class="material-symbols-outlined hidden dark:block">light_mode</span>
+                </button>
+                <div class="text-secondary dark:text-slate-300 text-sm font-semibold hover:text-primary transition-colors">
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">Cerrar Sesión</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        {% block main %}
+
+
+            <section class="relative w-full min-h-[60vh] flex items-center emerald-gradient-bg overflow-hidden py-20">
+                <div class="absolute inset-0 abstract-pattern opacity-30"></div>
+                <div class="relative z-10 max-w-[1400px] mx-auto px-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div class="space-y-8">
+                        <div class="inline-flex items-center gap-4">
+                            <span class="h-px w-12 bg-primary"></span>
+                            <span class="text-xs font-bold uppercase tracking-[0.5em] text-primary">Presencia Digital</span>
+                        </div>
+                        <h2 class="text-5xl md:text-7xl font-bold text-white leading-[1.1]">
+                            El centro del <br/> <span class="text-primary">Registro Escolar.</span>
+                        </h2>
+                        <p class="text-lg text-slate-300 max-w-xl font-light leading-relaxed">
+                            Interconectando conocimiento, gestión y visión institucional en una plataforma unificada.
+                        </p>
+                        <div class="flex flex-wrap gap-5 pt-4"><a href="{% url 'login' %}">
+                            <button class="bg-primary text-secondary px-10 py-4 font-bold uppercase tracking-widest text-xs hover:bg-white transition-all shadow-xl">
+                                
+                                Ingresar al portal
+                            </button></a>
+                            <button class="border border-white/20 text-white px-10 py-4 font-bold uppercase tracking-widest text-xs hover:bg-white/10 transition-all">
+                                <a href="{% url 'portal_cursos' %}">Documentación</a>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white/5 border border-white/10 p-6 backdrop-blur-sm">
+                            <span class="text-primary material-symbols-outlined text-4xl mb-4">groups</span>
+                            <div class="text-3xl font-bold text-white">1450</div>
+                            <div class="text-[10px] uppercase tracking-widest text-slate-400">Total Alumnos</div>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 p-6 backdrop-blur-sm">
+                            <span class="text-primary material-symbols-outlined text-4xl mb-4">auto_graph</span>
+                            <div class="text-3xl font-bold text-white">40</div>
+                            <div class="text-[10px] uppercase tracking-widest text-slate-400">Total Docentes</div>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 p-6 backdrop-blur-sm">
+                            <span class="text-primary material-symbols-outlined text-4xl mb-4">verified</span>
+                            <div class="text-3xl font-bold text-white">20</div>
+                            <div class="text-[10px] uppercase tracking-widest text-slate-400">Cursos Activos</div>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 p-6 backdrop-blur-sm">
+                            <span class="text-primary material-symbols-outlined text-4xl mb-4">public</span>
+                            <div class="text-3xl font-bold text-white"> 98%</div>
+                            <div class="text-[10px] uppercase tracking-widest text-slate-400">Asistencia General</div>
+                        </div>
+                    </div>
+
+
+            </section>
+
+
+            <section class="max-w-[1400px] mx-auto px-8 -mt-16 relative z-20 pb-24">
+                <div class="dashboard-grid">
+                    <div class="glass-card p-10 flex flex-col h-full group">
+                        <div class="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors">
+                            <span class="material-symbols-outlined text-secondary dark:text-primary group-hover:text-white text-3xl transition-colors">school</span>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3 text-secondary dark:text-white">Portal Alumnos</h4>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8">Acceso centralizado a
+                            calificaciones y recursos digitales.</p>
+                        <div class="mt-auto pt-6 border-t border-slate-100 dark:border-white/10">
+                            <a class="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:gap-4 transition-all"
+                               href="{% url 'portalalumnos' %}">
+                                Ingresar <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="glass-card p-10 flex flex-col h-full group">
+                        <div class="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors">
+                            <span class="material-symbols-outlined text-secondary dark:text-primary group-hover:text-white text-3xl transition-colors">analytics</span>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3 text-secondary dark:text-white">Gestión Docente</h4>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8">Planificación
+                            curricular y seguimiento de objetivos.</p>
+                        <div class="mt-auto pt-6 border-t border-slate-100 dark:border-white/10">
+                            <a class="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:gap-4 transition-all"
+                               href="{% url 'portal_profesores' %}">
+                                Ingresar <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-10 flex flex-col h-full group">
+                        <div class="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors">
+                            <span class="material-symbols-outlined text-secondary dark:text-primary group-hover:text-white text-3xl transition-colors">family_restroom</span>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3 text-secondary dark:text-white">Cursos</h4>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8">Seguimiento integral
+                            del desarrollo estudiantil.</p>
+                        <div class="mt-auto pt-6 border-t border-slate-100 dark:border-white/10">
+                            <a class="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:gap-4 transition-all"
+                               href="{% url 'portal_cursos' %}">
+                                Inscripción <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-10 flex flex-col h-full group">
+                        <div class="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors">
+                            <span class="material-symbols-outlined text-secondary dark:text-primary group-hover:text-white text-3xl transition-colors">diamond</span>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3 text-secondary dark:text-white">Apoderados</h4>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8">Exploración de mallas
+                            y programas de formación.</p>
+                        <div class="mt-auto pt-6 border-t border-slate-100 dark:border-white/10">
+                            <a class="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:gap-4 transition-all"
+                               href="#">
+                                Ingresar <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="py-24 bg-white dark:bg-slate-900/50 transition-colors overflow-hidden">
+                <div class="max-w-[1400px] mx-auto px-8">
+                    <div class="flex flex-col lg:flex-row gap-20 items-center">
+                        <div class="lg:w-1/2 relative">
+                            <img alt="Admisiones"
+                                 class="w-full h-[600px] object-cover shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000"
+                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmdqZfpGErchPaXfrVP2lLNvT6pqdJbMwwb2Qz-oMcRTH6Cy0NUqtIqlblun_j3ev3GDGQwYJ2uk1uc4GOcNX1vBacfV_G3uOsaiBJIp1mrx-fds-zznAnmqZwwmPPl8stak1oG4gU4ufVafcwRYq4qb0-e3KvL--aLs_lTU0x5E0FwQPdMgXcJ968pd4wqQ5i5wFcmcemiO_15c8U0t6YHNVzl0K9F93kSaQkXI0wcJwuwXyayQxXaNqQbLW1ppCGIfVK41A-ftxC"/>
+                            <div class="absolute -bottom-8 -right-8 bg-secondary p-12 text-white hidden md:block">
+                                <p class="text-3xl font-bold">Postula Aquí</p>
+                                <p class="text-xs uppercase tracking-widest mt-2 opacity-80">Admisión 2027 abierta</p>
+                            </div>
+                        </div>
+
+
+                        <div class="lg:w-1/2 space-y-8">
+                            <h3 class="text-4xl font-bold text-secondary dark:text-primary leading-tight transition-colors">
+                                ¿Por qué elegir nuestro colegio?</h3>
+                            <div class="space-y-6">
+                                <div class="flex gap-6">
+                                    <div class="shrink-0 w-12 h-12 border border-slate-200 dark:border-white/10 flex items-center justify-center text-primary transition-colors">
+                                        <span class="material-symbols-outlined">workspace_premium</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-bold text-secondary dark:text-white mb-1 uppercase tracking-wider text-sm transition-colors">
+                                            Excelencia Académica</h5>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed transition-colors">
+                                            Nuestros egresados lideran las
+                                            principales universidades del país gracias a un currículo bilingüe e
+                                            internacional.</p>
+                                    </div>
+                                </div>
+
+
+                                <div class="flex gap-6">
+                                    <div class="shrink-0 w-12 h-12 border border-slate-200 dark:border-white/10 flex items-center justify-center text-primary transition-colors">
+                                        <span class="material-symbols-outlined">diversity_3</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-bold text-secondary dark:text-white mb-1 uppercase tracking-wider text-sm transition-colors">
+                                            Comunidad Integral</h5>
+                                        <p class="text-sm text-slate-500 leading-relaxed">Fomentamos valores de respeto,
+                                            integridad y colaboración, creando un ambiente seguro para el desarrollo
+                                            personal.</p>
+                                    </div>
+                                </div>
+
+
+                                <div class="flex gap-6">
+                                    <div class="shrink-0 w-12 h-12 border border-slate-200 dark:border-white/10 flex items-center justify-center text-primary transition-colors">
+                                        <span class="material-symbols-outlined">rocket_launch</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-bold text-secondary dark:text-white mb-1 uppercase tracking-wider text-sm transition-colors">
+                                            Innovación Digital</h5>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed transition-colors">
+                                            Laboratorios de última
+                                            generación y un ecosistema digital que prepara a los alumnos para los
+                                            desafíos tecnológicos.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="bg-primary text-secondary px-10 py-4 font-bold uppercase tracking-widest text-xs hover:bg-secondary hover:text-white transition-all shadow-xl">
+                                Formulario de Ingreso
+                            </button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </section>
+
+
+            <section
+                    class="py-32 overflow-hidden bg-[var(--background-base)] dark:bg-dark-emerald transition-colors duration-500">
+                <div class="max-w-[1400px] mx-auto px-8">
+                    <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
+                        <div class="space-y-4">
+                            <span class="text-xs font-bold uppercase tracking-[0.5em] text-primary">Próximos Eventos</span>
+                            <h3 class="text-4xl font-bold uppercase text-secondary dark:text-white transition-colors">
+                                Próxima Actividades</h3>
+                        </div>
+                        <a class="text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors border-b border-slate-200 dark:border-white/10 pb-2"
+                           href="#">
+                            Ver Calendario Completo
+                        </a>
+                    </div>
+
+                    <div class="scroll-timeline flex gap-8 overflow-x-auto pb-12 snap-x scrollbar-hide">
+
+                        <div class="min-w-[400px] snap-start bg-white dark:bg-slate-900/40 border border-slate-100 dark:border-white/5 shadow-sm group transition-all">
+                            <div class="h-64 overflow-hidden">
+                                <img alt="Evento 1"
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale hover:grayscale-0"
+                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuApQS_94iWoSq7_MLsLMhKkLKzRI1pMfKFa34rn8dZOu9lMCqYurEUiNVgv_XPpstXYW0omOHfulS6Ii-QpqkQSM4QOq60aEJdneB6HDY8vIPI4ZYaDcqz7QocpMXK9s7CQgOfbAWwfXCbDrbelcUcAnYO2bGKRp405kyqMTff7tZOccR4mBW07G91Pq8ad0b2RemZx7w8vlC0htBJnn8WkekJiVQwgKNL5IhA7XVwLJpd7Y6s8U2iN8pknXF-JysbCWxeYb5L3Z6_T"/>
+                            </div>
+                            <div class="p-8 space-y-4">
+                                <div class="flex justify-between items-center text-primary font-bold text-xs uppercase tracking-widest">
+                                    <span>24 Oct, 2024</span>
+                                    <span class="bg-primary/10 px-3 py-1 rounded-full">Seminario</span>
+                                </div>
+                                <h5 class="text-xl font-bold text-secondary dark:text-white transition-colors">Foro de
+                                    Innovación Digital</h5>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed transition-colors">
+                                    Explorando el impacto de la inteligencia artificial en la pedagogía moderna.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="min-w-[400px] snap-start bg-white dark:bg-slate-900/40 border border-slate-100 dark:border-white/5 shadow-sm group transition-all">
+                            <div class="h-64 overflow-hidden">
+                                <img alt="Evento 2"
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale hover:grayscale-0"
+                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1Fj8wS-JTSbqoskKdXRXRd1XQhHWa8niTDrvDKgkWNsb0u9w-fQLL0YGWbUBDNoezHTmcNbi6GWxDFtzUy4JOMf1uoNb2dGtnuoN_0tryo6xdPuyECbwseTc5iXRRfhHhIyQYp4MNWwtHXvBe2QfJ5tghqMqTi-D97fL9DM8euf4TGyvb5GJSAnKVnbvrMrzMtFIfJ7gTL5w9sTN6Y_x0Fu3N0SVsc7vGB20VPkwub5ObZs_YCLk0C609W2gwwda-H52uRxr7t2Xb"/>
+                            </div>
+                            <div class="p-8 space-y-4">
+                                <div class="flex justify-between items-center text-primary font-bold text-xs uppercase tracking-widest">
+                                    <span>05 Nov, 2024</span>
+                                    <span class="bg-primary/10 px-3 py-1 rounded-full">Deportes</span>
+                                </div>
+                                <h5 class="text-xl font-bold text-secondary dark:text-white transition-colors">
+                                    Olimpiadas Institucionales</h5>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed transition-colors">
+                                    Competencia anual de atletismo y deportes colectivos inter-campus.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="min-w-[400px] snap-start bg-white dark:bg-slate-900/40 border border-slate-100 dark:border-white/5 shadow-sm group transition-all">
+                            <div class="h-64 overflow-hidden">
+                                <img alt="Evento 3"
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale hover:grayscale-0"
+                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDM8Dma_ucIsGZrnDUl27efVBkR6QFaNQkUNcAbbmON3G19h27rbEx--SVO6uTPubYBIHfeiKEmSdfBBrZ0Qgc_8NQu8YH4ulGmC-16NTJWnGNaNzERQUwUpaZcV0FlmbTDtkYkUiB1p5EywXKKwuISPX1wqLs9zlmqawXfGcpDIlIwMyF7dP4jKeTDgXLjPbJb7gIiWRhSSEAQpfxZ6Dir40mzQygKYxfxdfJcayGrOe7GpSmdjXr6b13_ZqfuOBjK6kAS5mDzp66g"/>
+                            </div>
+                            <div class="p-8 space-y-4">
+                                <div class="flex justify-between items-center text-primary font-bold text-xs uppercase tracking-widest">
+                                    <span>12 Nov, 2024</span>
+                                    <span class="bg-primary/10 px-3 py-1 rounded-full">Cultura</span>
+                                </div>
+                                <h5 class="text-xl font-bold text-secondary dark:text-white transition-colors">Gala de
+                                    Artes & Ciencias</h5>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed transition-colors">
+                                    Exhibición de proyectos destacados y presentaciones artísticas.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="min-w-[400px] snap-start bg-white dark:bg-slate-900/40 border border-slate-100 dark:border-white/5 shadow-sm group transition-all">
+                            <div class="h-64 overflow-hidden">
+                                <img alt="Evento 4"
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale hover:grayscale-0"
+                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_4OnSTR7lhp0s20zM1nCJqE1H7QejoYoc0fEGBQA8ufT_eJDTYXs3lhjeOG7PUUuyXE9FYFok_escn_7eMY7Ke-PCdr4K1Cf5Cy_zhfAO32ASdXOFmJwydMVXQ7O-r9iznOpjiTa36ijPwloBFIibFtjAkMUvA9ZKkDeIvWCHiTiYvniEQJDV8yqx7TqnfUvOK5KemYu96jj9gOieLZAz8THfXmkoUNM2dx588PwdPviML3ACiZHrDj9wM6DYOlLGhdVoN58KhYZs"/>
+                            </div>
+                            <div class="p-8 space-y-4">
+                                <div class="flex justify-between items-center text-primary font-bold text-xs uppercase tracking-widest">
+                                    <span>20 Nov, 2024</span>
+                                    <span class="bg-primary/10 px-3 py-1 rounded-full">Académico</span>
+                                </div>
+                                <h5 class="text-xl font-bold text-secondary dark:text-white transition-colors">
+                                    Certificación Global</h5>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed transition-colors">
+                                    Entrega de reconocimientos por excelencia en idiomas extranjeros.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-24 bg-white dark:bg-dark-emerald/50 border-t border-primary/10" id="programas-section">
+    <div class="max-w-[1400px] mx-auto px-8">
+        <div class="flex flex-col items-center text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-secondary dark:text-white mb-4">Catálogo de
+                Programas</h2>
+            <p class="text-slate-500 dark:text-slate-400 max-w-2xl text-lg font-light">
+                Descubre nuestra oferta académica diseñada para los líderes del mañana, con estándares
+                internacionales de calidad.
+            </p>
+        </div>
+        <div class="flex justify-center border-b border-slate-200 dark:border-white/10 mb-12">
+            <div class="flex gap-12">
+                <button class="tab-trigger active pb-4 text-xs font-bold uppercase tracking-[0.2em] border-b-2 border-transparent transition-all text-secondary dark:text-white"
+                        onclick="switchTab('grado')">Grado
+                </button>
+                <button class="tab-trigger pb-4 text-xs font-bold uppercase tracking-[0.2em] border-b-2 border-transparent transition-all text-slate-400 hover:text-secondary dark:hover:text-white"
+                        onclick="switchTab('postgrado')">Postgrado
+                </button>
+                <button class="tab-trigger pb-4 text-xs font-bold uppercase tracking-[0.2em] border-b-2 border-transparent transition-all text-slate-400 hover:text-secondary dark:hover:text-white"
+                        onclick="switchTab('continua')">Educación Continua
+                </button>
+            </div>
+        </div>
+        <div class="tab-content active animate-in fade-in duration-500" id="grado">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+
+
+                <div class="bg-gradient-to-br from-white to-slate-200 dark:from-slate-600 dark:to-slate-1000
+                border border-slate-200 dark:border-white/10 p-8 rounded-m shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group">
+
+                    <h5 class="font-serif text-2xl text-secondary dark:text-primary mb-4">Ingeniería en
+                        Innovación Digital</h5>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed">Programa
+                        enfocado en la creación de soluciones tecnológicas disruptivas para el mercado
+                        global.</p>
+                    <div class="flex flex-wrap gap-4 mb-8">
+                        <div class="flex items-center gap-2 bg-slate-50 dark:bg-white/5 px-3 py-1.5 rounded text-[10px] font-semibold uppercase tracking-wider text-secondary dark:text-slate-200">
+                            <span class="material-symbols-outlined text-sm">schedule</span> 10 Semestres
+                        </div>
+                        <div class="flex items-center gap-2 bg-slate-50 dark:bg-white/5 px-3 py-1.5 rounded text-[10px] font-semibold uppercase tracking-wider text-secondary dark:text-slate-200">
+                            <span class="material-symbols-outlined text-sm">laptop_mac</span>
+                            Presencial/Híbrido
+                        </div>
+                    </div>
+                    <button class="w-full bg-secondary dark:bg-primary text-white dark:text-secondary py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-primary dark:hover:bg-white transition-colors"
+                            onclick="toggleEnroll('enroll-1')">
+                        Inscribirse Ahora
+                    </button>
+
+                    <div class="enroll-details mt-6 space-y-6" id="enroll-1">
+                        <div class="p-6 bg-slate-50 dark:bg-slate-800 border-l-4 border-primary">
+                            <h6 class="text-xs font-bold uppercase tracking-widest text-secondary dark:text-white mb-4">
+                                Proceso de Inscripción</h6>
+                            <ul class="space-y-4 text-xs dark:text-slate-300">
+                                <li class="flex gap-4">
+                                    <span class="w-6 h-6 shrink-0 flex items-center justify-center bg-primary text-secondary font-bold rounded-full">1</span>
+                                    <p><span class="font-bold">Postulación Online:</span> Complete el
+                                        formulario de admisión y cargue su currículum y certificados.</p>
+                                </li>
+                                <li class="flex gap-4">
+                                    <span class="w-6 h-6 shrink-0 flex items-center justify-center bg-primary text-secondary font-bold rounded-full">2</span>
+                                    <p><span class="font-bold">Entrevista Técnica:</span> Sesión con el
+                                        director del programa para evaluar afinidad y conocimientos.</p>
+                                </li>
+                                <li class="flex gap-4">
+                                    <span class="w-6 h-6 shrink-0 flex items-center justify-center bg-primary text-secondary font-bold rounded-full">3</span>
+                                    <p><span class="font-bold">Formalización:</span> Pago de matrícula y
+                                        firma de contrato de prestación de servicios educativos.</p>
+                                </li>
+                            </ul>
+                            <div class="mt-6 pt-6 border-t border-slate-200 dark:border-white/10">
+                                <p class="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Fecha
+                                    Límite</p>
+                                <p class="text-sm font-bold text-secondary dark:text-white">15 de Marzo,
+                                    2025</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-white to-slate-200 dark:from-slate-600 dark:to-slate-1000
+                border border-slate-200 dark:border-white/10 p-8 rounded-m shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group">
+                    <h5 class="font-serif text-2xl text-secondary dark:text-primary mb-4">Licenciatura en
+                        Gestión Global</h5>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed">Formación
+                        integral para el liderazgo de equipos multidisciplinarios en entornos
+                        internacionales.</p>
+                    <div class="flex flex-wrap gap-4 mb-8">
+                        <div class="flex items-center gap-2 bg-slate-50 dark:bg-white/5 px-3 py-1.5 rounded text-[10px] font-semibold uppercase tracking-wider text-secondary dark:text-slate-200">
+                            <span class="material-symbols-outlined text-sm">schedule</span> 8 Semestres
+                        </div>
+                        <div class="flex items-center gap-2 bg-slate-50 dark:bg-white/5 px-3 py-1.5 rounded text-[10px] font-semibold uppercase tracking-wider text-secondary dark:text-slate-200">
+                            <span class="material-symbols-outlined text-sm">public</span> Modalidad Global
+                        </div>
+                    </div>
+                    <button class="w-full bg-secondary dark:bg-primary text-white dark:text-secondary py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-primary dark:hover:bg-white transition-colors"
+                            onclick="toggleEnroll('enroll-2')">
+                        Inscribirse Ahora
+                    </button>
+                    <div class="enroll-details mt-6 space-y-6" id="enroll-2">
+                        <div class="p-6 bg-slate-50 dark:bg-slate-800 border-l-4 border-primary">
+                            <h6 class="text-xs font-bold uppercase tracking-widest text-secondary dark:text-white mb-4">
+                                Requisitos de Ingreso</h6>
+                            <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-400 mb-4">
+                                Certificado de secundaria legalizado, nivel de inglés intermedio (B2) y
+                                carta de motivación personal.</p>
+                            <div class="mt-6 pt-6 border-t border-slate-200 dark:border-white/10">
+                                <p class="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Próximo
+                                    Inicio</p>
+                                <p class="text-sm font-bold text-secondary dark:text-white">Abril 2025</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-white to-slate-200 dark:from-slate-600 dark:to-slate-1000
+                border border-slate-200 dark:border-white/10 p-8 rounded-m shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group">
+                    <h5 class="font-serif text-2xl text-secondary dark:text-primary mb-4">Arquitectura
+                        Sostenible</h5>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed">Diseño de
+                        espacios urbanos respetuosos con el medio ambiente utilizando bionateriales.</p>
+                    <div class="flex flex-wrap gap-4 mb-8">
+                        <div class="flex items-center gap-2 bg-slate-50 dark:bg-white/5 px-3 py-1.5 rounded text-[10px] font-semibold uppercase tracking-wider text-secondary dark:text-slate-200">
+                            <span class="material-symbols-outlined text-sm">schedule</span> 10 Semestres
+                        </div>
+                        <div class="flex items-center gap-2 bg-slate-50 dark:bg-white/5 px-3 py-1.5 rounded text-[10px] font-semibold uppercase tracking-wider text-secondary dark:text-slate-200">
+                            <span class="material-symbols-outlined text-sm">potted_plant</span> Lab Focused
+                        </div>
+                    </div>
+                    <button class="w-full bg-secondary dark:bg-primary text-white dark:text-secondary py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-primary dark:hover:bg-white transition-colors"
+                            onclick="toggleEnroll('enroll-3')">
+                        Inscribirse Ahora
+                    </button>
+                    <div class="enroll-details mt-6 space-y-6" id="enroll-3">
+                        <div class="p-6 bg-slate-50 dark:bg-slate-800 border-l-4 border-primary">
+                            <h6 class="text-xs font-bold uppercase tracking-widest text-secondary dark:text-white mb-4">
+                                Admisión 2025</h6>
+                            <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-400">Cupos
+                                limitados. El proceso requiere la presentación de un portafolio creativo
+                                básico.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content animate-in fade-in duration-500 hidden" id="postgrado">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-gradient-to-br from-white to-slate-200 dark:from-slate-600 dark:to-slate-1000
+                border border-slate-200 dark:border-white/10 p-8 rounded-m shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group">
+                    <h5 class="font-serif text-2xl text-secondary dark:text-primary mb-4">MBA en Liderazgo
+                        Estratégico</h5>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed">Máster
+                        ejecutivo diseñado para directivos que buscan transformar sus organizaciones.</p>
+                    <div class="flex flex-wrap gap-4 mb-8">
+                        <div class="flex items-center gap-2 bg-slate-50 dark:bg-white/5 px-3 py-1.5 rounded text-[10px] font-semibold uppercase tracking-wider text-secondary dark:text-slate-200">
+                            <span class="material-symbols-outlined text-sm">schedule</span> 18 Meses
+                        </div>
+                        <div class="flex items-center gap-2 bg-slate-50 dark:bg-white/5 px-3 py-1.5 rounded text-[10px] font-semibold uppercase tracking-wider text-secondary dark:text-slate-200">
+                            <span class="material-symbols-outlined text-sm">weekend</span> Executive
+                        </div>
+                    </div>
+                    <button class="w-full bg-secondary dark:bg-primary text-white dark:text-secondary py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-primary dark:hover:bg-white transition-colors"
+                            onclick="toggleEnroll('enroll-p1')">
+                        Inscribirse Ahora
+                    </button>
+                    <div class="enroll-details mt-6" id="enroll-p1">
+                        <div class="p-6 bg-slate-50 dark:bg-slate-800 border-l-4 border-primary">
+                            <p class="text-xs font-bold uppercase mb-2 dark:text-white">Requisito Principal:</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Mínimo 5 años de experiencia laboral
+                                comprobable en cargos de jefatura o gerencia.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-white to-slate-200 dark:from-slate-600 dark:to-slate-1000
+                border border-slate-200 dark:border-white/10 p-8 rounded-m shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group">
+                    <h5 class="font-serif text-2xl text-secondary dark:text-primary mb-4">Doctorado en IA
+                        Aplicada</h5>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed">Investigación
+                        avanzada sobre los efectos de la IA en la sociedad y la industria.</p>
+                    <div class="flex flex-wrap gap-4 mb-8">
+                        <div class="flex items-center gap-2 bg-slate-50 dark:bg-white/5 px-3 py-1.5 rounded text-[10px] font-semibold uppercase tracking-wider text-secondary dark:text-slate-200">
+                            <span class="material-symbols-outlined text-sm">schedule</span> 3 Años
+                        </div>
+                        <div class="flex items-center gap-2 bg-slate-50 dark:bg-white/5 px-3 py-1.5 rounded text-[10px] font-semibold uppercase tracking-wider text-secondary dark:text-slate-200">
+                            <span class="material-symbols-outlined text-sm">science</span> Research
+                        </div>
+                    </div>
+                    <button class="w-full bg-secondary dark:bg-primary text-white dark:text-secondary py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-primary dark:hover:bg-white transition-colors"
+                            onclick="toggleEnroll('enroll-p2')">
+                        Inscribirse Ahora
+                    </button>
+                    <div class="enroll-details mt-6" id="enroll-p2">
+                        <div class="p-6 bg-slate-50 dark:bg-slate-800 border-l-4 border-primary text-xs">
+                            <p class="font-bold mb-2 dark:text-white">Postulación de Proyecto:</p>
+                            <p class="text-slate-500 dark:text-slate-400">Requiere anteproyecto de investigación avalado por un
+                                tutor de nuestra red académica.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content animate-in fade-in duration-500 hidden" id="continua">
+            <div class="text-center py-20 bg-slate-50 dark:bg-slate-800/50 border border-dashed border-slate-300 dark:border-white/10">
+                <span class="material-symbols-outlined text-5xl text-primary mb-4">construction</span>
+                <h5 class="font-serif text-xl mb-2 dark:text-white">Programas Temporales</h5>
+                <p class="text-slate-400 text-sm">Próximamente: Diplomados en Ciberseguridad, UX Design y
+                    Blockchain.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+        {% endblock %}
+    </main>
+
+    <footer class="bg-dark-emerald text-slate-400 pt-20 pb-10 border-t border-primary/20">
+        <div class="max-w-[1400px] mx-auto px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+            <div class="space-y-6">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-primary text-3xl">account_balance</span>
+                    <span class="text-lg font-bold text-white tracking-[0.2em] uppercase">Hub Central</span>
+                </div>
+                <p class="text-xs leading-relaxed max-w-xs">Liderando la vanguardia en gestión académica integrada y
+                    excelencia formativa.</p>
+            </div>
+            <div>
+                <h5 class="text-white text-[11px] font-bold uppercase tracking-[0.3em] mb-8">Acceso Rapido</h5>
+                <ul class="space-y-4 text-[11px] font-medium uppercase tracking-widest">
+                    <li><a class="hover:text-primary transition-colors" href="{% url 'reglamento' %}">Reglamento</a>
+                    </li>
+                    <li><a class="hover:text-primary transition-colors" href="{% url 'terminos' %}">Privacidad</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="{% url 'directorio_docente' %}">Directorio
+                        Docente</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-white text-[11px] font-bold uppercase tracking-[0.3em] mb-8">Contacto</h5>
+                <div class="space-y-4 text-xs font-light">
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-sm">location_on</span>
+                        <span>Av. Excelencia 1000, Distrito Central.</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary text-sm">mail</span>
+                        <span>contacto@hubcentral.edu</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h5 class="text-white text-[11px] font-bold uppercase tracking-[0.3em] mb-8">Soporte</h5>
+                <a href="{% url 'contacto' %}"
+                   class="bg-white text-secondary text-xs font-bold px-6 py-3 rounded-sm hover:bg-primary transition-all uppercase tracking-widest block text-center">Contactar</a>
+            </div>
+        </div>
+        <div class="max-w-[1400px] mx-auto px-8 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] uppercase tracking-[0.4em]">
+            <p>© <span id="current-year"></span> Hub Central Interactivo.</p>
+            <div class="flex gap-8 mt-4 md:mt-0">
+                <a class="hover:text-primary transition-colors" href="#">Términos Legales</a>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    // Aseguramos que el script se ejecute cuando el HTML esté listo
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // 1. Lógica del Modo Oscuro
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.classList.add('dark');
+        }
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                htmlElement.classList.toggle('dark');
+                localStorage.setItem('theme', htmlElement.classList.contains('dark') ? 'dark' : 'light');
+            });
+        }
+
+        // 2. Año actual
+        const yearSpan = document.getElementById('current-year');
+        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+    });
+
+    // 3. Lógica para Pestañas (Global)
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-trigger').forEach(trigger => {
+            trigger.classList.remove('active', 'border-primary');
+            trigger.classList.add('text-slate-400');
+        });
+
+        const selectedTab = document.getElementById(tabId);
+        if (selectedTab) selectedTab.classList.add('active');
+
+        event.currentTarget.classList.add('active', 'border-primary');
+        event.currentTarget.classList.remove('text-slate-400');
+    }
+
+    // 4. Lógica para Acordeones (Inscripción)
+    function toggleEnroll(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        // Cerrar otros acordeones dentro de la misma pestaña para mantener orden
+        el.closest('.tab-content').querySelectorAll('.enroll-details').forEach(detail => {
+            if (detail.id !== id) detail.classList.remove('open');
+        });
+
+        el.classList.toggle('open');
+    }
+</script>
+
+</body>
+</html>

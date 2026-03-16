@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Registrar Profesor {% endblock %}
+
+{% block main %}
+
+    <div class="max-w-2xl mx-auto px-6 py-12">
+        <nav class="flex items-center gap-2 text-[10px] font-bold text-slate-400 mb-8 uppercase tracking-[0.2em]">
+            <a class="hover:text-primary transition-colors" href="{% url 'base' %}">Inicio</a>
+            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+            <a class="hover:text-primary transition-colors" href="{% url 'portal_profesores' %}">Profesores</a>
+            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+            <span class="text-secondary dark:text-primary">Registrar Profesor</span>
+        </nav>
+
+        <div class="mb-10 flex items-center gap-4">
+            <div class="size-12 bg-secondary dark:bg-primary flex items-center justify-center text-white dark:text-secondary shadow-xl shadow-secondary/10">
+                <span class="material-symbols-outlined">person_add</span>
+            </div>
+            <div>
+                <h1 class="text-2xl font-serif font-bold text-secondary dark:text-white uppercase tracking-tight">
+                    Registrar Nuevo Profesor</h1>
+                <p class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-widest mt-1">Todos los campos
+                    son obligatorios.</p>
+            </div>
+        </div>
+
+        <div class="bg-secondary dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-xl p-8 backdrop-blur-sm">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="space-y-8">
+
+                    <div>
+                        <label for="{{ form.rut.id_for_label }}"
+                               class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-white dark:text-slate-300 mb-3">
+                            <span class="material-symbols-outlined text-[16px] text-primary">badge</span>
+                            {{ form.rut.label }}
+                        </label>
+                        <input type="text"
+                               name="rut"
+                               id="{{ form.rut.id_for_label }}"
+                               value="{{ form.rut.value|default:'' }}"
+                               placeholder="Ej: 12.345.678-9"
+                               class="w-full px-4 py-4 rounded-lg border text-sm bg-slate-50 dark:bg-slate-800/50
+                                {% if form.rut.errors %}border-red-400
+                                {% else %}border-slate-200 dark:border-slate-700
+                                {% endif %} text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all">
+                        {% if form.rut.errors %}
+                            <p class="mt-2 text-[10px] text-red-500 flex items-center gap-1 uppercase tracking-wider font-bold">
+                                <span class="material-symbols-outlined text-[14px]">error</span>
+                                {{ form.rut.errors|join:", " }}
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label for="{{ form.nombre.id_for_label }}"
+                                   class="flex items-center gap-1.5 text-sm font-semibold text-white dark:text-slate-300 mb-2">
+                                <span class="material-symbols-outlined text-[16px] text-primary">person</span>
+                                {{ form.nombre.label }}
+                            </label>
+                            <input type="text"
+                                   name="nombre"
+                                   id="{{ form.nombre.id_for_label }}"
+                                   value="{{ form.nombre.value|default:'' }}"
+                                   placeholder="Nombre del profesor"
+                                   class="w-full px-4 py-3 rounded-xl border text-sm
+                                      {% if form.nombre.errors %}border-red-400 bg-red-50 dark:bg-red-900/10
+                                      {% else %}border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800{% endif %}
+                                      text-slate-900 dark:text-white placeholder-slate-400
+                                      focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                            {% if form.nombre.errors %}
+                                <p class="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">error</span>
+                                    {{ form.nombre.errors|join:", " }}
+                                </p>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.apellido.id_for_label }}"
+                                   class="flex items-center gap-1.5 text-sm font-semibold text-white dark:text-slate-300 mb-2">
+                                <span class="material-symbols-outlined text-[16px] text-primary">person</span>
+                                {{ form.apellido.label }}
+                            </label>
+                            <input type="text"
+                                   name="apellido"
+                                   id="{{ form.apellido.id_for_label }}"
+                                   value="{{ form.apellido.value|default:'' }}"
+                                   placeholder="Apellido del profesor"
+                                   class="w-full px-4 py-3 rounded-xl border text-sm
+                                      {% if form.apellido.errors %}border-red-400 bg-red-50 dark:bg-red-900/10
+                                      {% else %}border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800{% endif %}
+                                      text-slate-900 dark:text-white placeholder-slate-400
+                                      focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                            {% if form.apellido.errors %}
+                                <p class="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">error</span>
+                                    {{ form.apellido.errors|join:", " }}
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label for="{{ form.fecha_nacimiento.id_for_label }}"
+                                   class="flex items-center gap-1.5 text-sm font-semibold text-white dark:text-slate-300 mb-2">
+                                <span class="material-symbols-outlined text-[16px] text-primary">calendar_today</span>
+                                {{ form.fecha_nacimiento.label }}
+                            </label>
+                            <input type="text"
+                                   name="fecha_nacimiento"
+                                   id="{{ form.fecha_nacimiento.id_for_label }}"
+                                   value="{{ form.fecha_nacimiento.value|default:'' }}"
+                                   placeholder="DD/MM/AAAA"
+                                   class="w-full px-4 py-3 rounded-xl border text-sm
+                                      {% if form.fecha_nacimiento.errors %}border-red-400 bg-red-50 dark:bg-red-900/10
+                                      {% else %}border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800{% endif %}
+                                      text-slate-900 dark:text-white placeholder-slate-400
+                                      focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                        </div>
+
+                        <div>
+                            <label for="{{ form.profesion.id_for_label }}"
+                                   class="flex items-center gap-1.5 text-sm font-semibold text-white dark:text-slate-300 mb-2">
+                                <span class="material-symbols-outlined text-[16px] text-primary">school</span>
+                                {{ form.profesion.label }}
+                            </label>
+                            <input type="text"
+                                   name="profesion"
+                                   id="{{ form.profesion.id_for_label }}"
+                                   value="{{ form.profesion.value|default:'' }}"
+                                   placeholder="Ej: Lic. en Matemáticas"
+                                   class="w-full px-4 py-3 rounded-xl border text-sm
+                                      {% if form.profesion.errors %}border-red-400 bg-red-50 dark:bg-red-900/10
+                                      {% else %}border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800{% endif %}
+                                      text-slate-900 dark:text-white placeholder-slate-400
+                                      focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                        </div>
+                    </div>
+
+                    {% if form.non_field_errors %}
+                        <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 flex items-start gap-3">
+                            <span class="material-symbols-outlined text-red-500 text-[20px] shrink-0">gpp_bad</span>
+                            <div>
+                                <p class="text-sm font-semibold text-red-700 dark:text-red-400">Error en el formulario</p>
+                                <p class="text-xs text-red-600 dark:text-red-300 mt-0.5">{{ form.non_field_errors|join:", " }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="flex flex-col sm:flex-row gap-4 mt-10 pt-8 border-t border-slate-100 dark:border-slate-800">
+                        <button type="submit"
+                                class="flex-1 flex items-center justify-center gap-3 bg-[#10b981] hover:bg-[#059669] text-white font-bold py-4 px-6 uppercase tracking-[0.2em] text-[11px] transition-all shadow-lg active:scale-95 hover:shadow-[#10b981]/20">
+                            <span class="material-symbols-outlined text-[18px]">save</span>
+                            Guardar Profesor
+                        </button>
+
+                        <a href="{% url 'portal_profesores' %}"
+                           class="flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 text-[#d4ac31] text-[11px] font-bold uppercase tracking-[0.2em] py-3.5 px-6 rounded-lg transition-all border border-[#d4ac31]">
+                            <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                            Cancelar
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

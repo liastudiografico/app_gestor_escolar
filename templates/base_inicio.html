@@ -1,0 +1,38 @@
+// estilo de botones
+
+<div class="px-8 py-8 bg-[#064e3b] border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6   ">
+
+        <div class="flex flex-wrap items-center gap-4">
+
+            <button type="button"
+                    class="flex items-center gap-3 bg-[#10b981] hover:bg-[#059669] text-white text-[11px] font-bold uppercase tracking-[0.2em] py-3.5 px-6  transition-all shadow-lg active:scale-95">
+                <span class="material-symbols-outlined text-[18px]">save</span>
+                Guardar Cambios
+            </button>
+
+            <button type="button"
+                    class="flex items-center gap-3 bg-[#064e3b] hover:bg-white/5 text-[#d4ac31] text-[11px] font-bold uppercase tracking-[0.2em] py-3.5 px-6  transition-all border-2 border-[#d4ac31]/50 hover:border-[#d4ac31]">
+                <span class="material-symbols-outlined text-[18px]">ios_share</span>
+                Exportar
+            </button>
+
+            <button type="button"
+                    class="flex items-center gap-3 bg-[#064e3b] hover:bg-white/5 text-[#d4ac31] text-[11px] font-bold uppercase tracking-[0.2em] py-3.5 px-6  transition-all border-2 border-[#d4ac31]/50 hover:border-[#d4ac31]">
+                <span class="material-symbols-outlined text-[18px]">download</span>
+                Descargar PDF
+            </button>
+        </div>
+
+        <div class="flex items-center gap-6">
+            <div class="hidden lg:block text-right">
+                <p class="text-[10px] font-bold text-emerald-400/60 uppercase tracking-[0.2em]">Registros Totales</p>
+                <p class="text-xl font-serif font-bold text-white leading-none">{{ lista_alumnos|length }} Alumnos</p>
+            </div>
+
+            <a href="{% url 'portalalumnos' %}"
+               class="flex items-center gap-3 bg-[#d4ac31] hover:bg-[#b89528] text-[#064e3b] text-[11px] font-black uppercase tracking-[0.2em] py-3.5 px-8  transition-all shadow-xl hover:-translate-y-1">
+                <span class="material-symbols-outlined text-[20px]">home</span>
+                Volver al Inicio
+            </a>
+        </div>
+    </div>

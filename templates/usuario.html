@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Mi Perfil — Sistema de Gestión Escolar (SGE){% endblock %}
+
+{% block main %}
+
+    <div class="max-w-3xl mx-auto space-y-8">
+
+        <!-- ENCABEZADO -->
+        <div class="mb-2">
+            <h2 class="text-navy-deep dark:text-white text-3xl font-extrabold tracking-tight">
+                Mi Perfil
+            </h2>
+            <p class="text-muted-blue dark:text-slate-400 mt-1 text-base">
+                Información de tu cuenta y actividad en la sesión actual.
+            </p>
+        </div>
+
+
+        <!-- ══════════════════════════════════════════════════════════
+             SECCIÓN 1 — Información del usuario y cierre de sesión
+        ══════════════════════════════════════════════════════════ -->
+        <div class="bg-white dark:bg-slate-900
+                rounded-2xl border border-soft-grey dark:border-slate-800
+                shadow-sm overflow-hidden">
+
+            <!-- Encabezado de la tarjeta -->
+            <div class="px-6 py-4 border-b border-soft-grey dark:border-slate-800
+                    flex items-center gap-3">
+                <div class="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[18px] text-primary">account_circle</span>
+                </div>
+                <h3 class="text-base font-bold text-navy-deep dark:text-white">
+                    Información del Usuario
+                </h3>
+            </div>
+
+            <!-- Avatar + datos principales -->
+            <div class="px-6 py-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+
+                <!-- Avatar con iniciales -->
+                <div class="size-20 rounded-2xl bg-primary
+                        flex items-center justify-center
+                        text-white text-2xl font-black
+                        ring-4 ring-primary/15 shrink-0
+                        select-none">
+                    {{ request.user.username|first|upper }}{{ request.user.username|slice:"1:2"|upper }}
+                </div>
+
+                <!-- Datos textuales -->
+                <div class="flex-1 text-center sm:text-left space-y-1">
+                    <p class="text-xl font-extrabold text-navy-deep dark:text-white">
+                        {{ request.user.username }}
+                    </p>
+
+                    {% if request.user.email %}
+                        <p class="text-sm text-muted-blue dark:text-slate-400
+                               flex items-center gap-1.5 justify-center sm:justify-start">
+                            <span class="material-symbols-outlined text-[15px]">mail</span>
+                            {{ request.user.email }}
+                        </p>
+                    {% else %}
+                        <p class="text-sm text-slate-400
+                               flex items-center gap-1.5 justify-center sm:justify-start">
+                            <span class="material-symbols-outlined text-[15px]">mail_off</span>
+                            Sin correo registrado
+                        </p>
+                    {% endif %}
+
+                    <!-- Badges de rol -->
+                    <div class="flex flex-wrap gap-2 pt-1 justify-center sm:justify-start">
+
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full
+                                 bg-emerald-100 dark:bg-emerald-900/30
+                                 text-emerald-700 dark:text-emerald-400
+                                 text-[11px] font-bold uppercase tracking-wider">
+                        <span class="size-1.5 rounded-full bg-emerald-500"></span>
+                        Activo
+                    </span>
+
+                        {% if request.user.is_staff %}
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full
+                                     bg-primary/10 text-primary
+                                     text-[11px] font-bold uppercase tracking-wider">
+                            <span class="material-symbols-outlined text-[12px]">shield</span>
+                            Staff
+                        </span>
+                        {% endif %}
+
+                        {% if request.user.is_superuser %}
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full
+                                     bg-amber-100 dark:bg-amber-900/30
+                                     text-amber-700 dark:text-amber-400
+                                     text-[11px] font-bold uppercase tracking-wider">
+                            <span class="material-symbols-outlined text-[12px]">star</span>
+                            Superusuario
+                        </span>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila: fecha de creación -->
+            <div class="border-t border-soft-grey dark:border-slate-800">
+                <div class="px-6 py-4 flex items-center gap-4">
+                    <div class="size-9 rounded-lg bg-slate-100 dark:bg-slate-800
+                            flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-[18px] text-slate-400">
+                        calendar_today
+                    </span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                            Cuenta creada el
+                        </p>
+                        <p class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-0.5">
+                            {{ request.user.date_joined|date:"d/m/Y" }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón cerrar sesión -->
+            <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50
+                    border-t border-soft-grey dark:border-slate-800">
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                            class="flex items-center gap-2
+                               px-4 py-2.5 rounded-xl
+                               bg-red-50 dark:bg-red-900/20
+                               hover:bg-red-100 dark:hover:bg-red-900/40
+                               text-red-600 dark:text-red-400
+                               text-sm font-bold
+                               border border-red-200 dark:border-red-800
+                               transition-all duration-200">
+                        <span class="material-symbols-outlined text-[18px]">logout</span>
+                        Cerrar Sesión
+                    </button>
+                </form>
+            </div>
+
+        </div>
+        {# FIN SECCIÓN 1 #}
+
+
+        <!-- ══════════════════════════════════════════════════════════
+             SECCIÓN 2 — Actividad de la sesión (App Sessions)
+        ══════════════════════════════════════════════════════════ -->
+        <div class="bg-white dark:bg-slate-900
+                rounded-2xl border border-soft-grey dark:border-slate-800
+                shadow-sm overflow-hidden">
+
+            <!-- Encabezado -->
+            <div class="px-6 py-4 border-b border-soft-grey dark:border-slate-800
+                    flex items-center gap-3">
+                <div class="size-9 rounded-lg bg-indigo-500/10 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[18px] text-indigo-500">monitoring</span>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-navy-deep dark:text-white">
+                        Actividad de la Sesión
+                    </h3>
+                    <p class="text-xs text-slate-400 mt-0.5">
+                        Datos registrados desde que iniciaste sesión
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dos tarjetas de métricas -->
+            <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                <!-- Tarjeta 1: Timestamp del login -->
+                <div class="flex items-start gap-4 p-4 rounded-xl
+                        bg-slate-50 dark:bg-slate-800
+                        border border-soft-grey dark:border-slate-700">
+                    <div class="size-10 rounded-xl bg-primary/10
+                            flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[20px] text-primary">login</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
+                            Inicio de sesión
+                        </p>
+                        <p class="text-sm font-bold text-navy-deep dark:text-white leading-snug">
+                            {{ login_timestamp }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: Contador de acciones -->
+                <div class="flex items-start gap-4 p-4 rounded-xl
+                        bg-slate-50 dark:bg-slate-800
+                        border border-soft-grey dark:border-slate-700">
+                    <div class="size-10 rounded-xl bg-orange-500/10
+                            flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[20px] text-orange-500">bolt</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
+                            Operaciones realizadas
+                        </p>
+                        <p class="text-sm font-bold text-navy-deep dark:text-white leading-snug">
+                            {{ acciones_sesion }}
+                            {% if acciones_sesion == 1 %}
+                                operación en esta sesión
+                            {% else %}
+                                operaciones en esta sesión
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Nota al pie -->
+            <div class="px-6 py-3 bg-slate-50 dark:bg-slate-800/50
+                    border-t border-soft-grey dark:border-slate-800">
+                <p class="text-xs text-slate-400 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[14px]">info</span>
+                    El contador se reinicia automáticamente en cada nuevo inicio de sesión.
+                </p>
+            </div>
+
+        </div>
+        {# FIN SECCIÓN 2 #}
+
+
+        <!-- ══════════════════════════════════════════════════════════
+             SECCIÓN 3 — Estado del perfil (App Messages)
+             Solo aparece si messages.warning fue emitido en views.py
+             porque request.user.email está vacío.
+        ══════════════════════════════════════════════════════════ -->
+        {% for message in messages %}
+            {% if "warning" in message.tags %}
+
+                <div class="bg-white dark:bg-slate-900
+                    rounded-2xl border border-amber-200 dark:border-amber-800
+                    shadow-sm overflow-hidden">
+
+                    <!-- Encabezado -->
+                    <div class="px-6 py-4 border-b border-amber-100 dark:border-amber-900/40
+                        flex items-center gap-3
+                        bg-amber-50 dark:bg-amber-900/20">
+                        <div class="size-9 rounded-lg bg-amber-100 dark:bg-amber-900/40
+                            flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[18px] text-amber-600 dark:text-amber-400">
+                        warning
+                    </span>
+                        </div>
+                        <h3 class="text-base font-bold text-amber-800 dark:text-amber-300">
+                            Perfil Incompleto
+                        </h3>
+                    </div>
+
+                    <!-- Contenido -->
+                    <div class="px-6 py-5">
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            {{ message }}
+                        </p>
+                        <a href="/admin/auth/user/{{ request.user.pk }}/change/"
+                           class="inline-flex items-center gap-1.5 mt-3
+                          text-xs font-bold text-amber-600 dark:text-amber-400
+                          hover:text-amber-700 dark:hover:text-amber-300
+                          transition-colors">
+                            <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+                            Actualizar en el panel de administración
+                        </a>
+                    </div>
+
+                </div>
+
+            {% endif %}
+        {% endfor %}
+        {# FIN SECCIÓN 3 #}
+
+    </div>
+
+{% endblock %}

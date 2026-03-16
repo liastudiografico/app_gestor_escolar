@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+    --emerald-deep: #064e3b;
+    --emerald-rich: #065f46;
+    --gold-primary: #d4af37;
+    --gold-light: #f4e1a1;
+    --background-base: #fdfdfc;
+    --text-main: #1a2e2a;
+}
+
+@layer base {
+    h1, h2, h3, h4, .font-serif {
+        font-family: 'Cinzel', serif;
+    }
+
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: var(--background-base);
+        color: var(--text-main);
+        @apply transition-colors duration-500;
+    }
+
+    /* Sincronización de variables CSS con clase dark */
+    .dark {
+        --background-base: #1a2e2a;
+        --text-main: #d4af37;
+    }
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.glass-card {
+    @apply bg-white dark:bg-slate-900/40 backdrop-blur-md;
+    background: rgba(255, 255, 255, 0.7);
+    /* Efecto de desenfoque */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* Borde sutil */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* Sombra suave */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    /* Bordes redondeados */
+
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Modo oscuro */
+.dark .glass-card {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+
+.glass-card:hover {
+    border-color: var(--gold-primary);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(6, 78, 59, 0.1);
+     background: rgba(255, 255, 255, 0.85);
+}
+
+.dark .glass-card:hover {
+    background: rgba(15, 23, 42, 0.7);
+}
+
+.emerald-gradient-bg {
+    background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+}
+
+.abstract-pattern {
+    background-image: radial-gradient(circle at 2px 2px, rgba(212, 175, 55, 0.1) 1px, transparent 0);
+    background-size: 32px 32px;
+}
+
+/* Control de Pestañas */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Control de Despliegue (Acordeón) */
+.enroll-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    opacity: 0;
+}
+
+.enroll-details.open {
+    max-height: 1000px; /* Suficiente para el contenido */
+    opacity: 1;
+    margin-top: 1rem;
+}
+
+/* Indicador de pestaña activa */
+.tab-trigger.active {
+    @apply border-primary text-secondary dark:text-primary;
+}
+
+
+

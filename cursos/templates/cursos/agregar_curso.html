@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Registrar Curso {% endblock %}
+
+{% block main %}
+
+    <div class="max-w-2xl mx-auto px-6 py-12">
+        <nav class="flex items-center gap-2 text-[10px] font-bold text-slate-400 mb-8 uppercase tracking-[0.2em]">
+            <a class="hover:text-primary transition-colors" href="{% url 'base' %}">Inicio</a>
+            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+            <a class="hover:text-primary transition-colors" href="{% url 'portal_cursos' %}">Cursos</a>
+            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+            <span class="text-secondary dark:text-primary">Registrar Curso</span>
+        </nav>
+
+        <div class="mb-10 flex items-center gap-4">
+            <div class="size-12 bg-secondary dark:bg-primary flex items-center justify-center text-white dark:text-secondary shadow-xl shadow-secondary/10">
+                <span class="material-symbols-outlined">add_circle</span>
+            </div>
+            <div>
+                <h1 class="text-2xl font-serif font-bold text-secondary dark:text-white uppercase tracking-tight">
+                    Registrar Nuevo Curso</h1>
+                <p class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-widest mt-1">Todos los campos son obligatorios salvo los alumnos.</p>
+            </div>
+        </div>
+
+        <div class="bg-secondary dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-xl p-8 backdrop-blur-sm">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="space-y-8">
+
+                    <div>
+                        <label for="{{ form.nombre.id_for_label }}"
+                               class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-white dark:text-slate-300 mb-3">
+                            <span class="material-symbols-outlined text-[16px] text-primary">book</span>
+                            {{ form.nombre.label }}
+                        </label>
+                        <input type="text"
+                               name="nombre"
+                               id="{{ form.nombre.id_for_label }}"
+                               value="{{ form.nombre.value|default:'' }}"
+                               placeholder="Ej: Matemáticas 1°A"
+                               class="w-full px-4 py-4 rounded-lg border text-sm bg-slate-50 dark:bg-slate-800/50
+                               {% if form.nombre.errors %}border-red-400{% else %}border-slate-200 dark:border-slate-700{% endif %}
+                               text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all">
+                        {% if form.nombre.errors %}
+                            <p class="mt-2 text-[10px] text-red-500 flex items-center gap-1 uppercase tracking-wider font-bold">
+                                <span class="material-symbols-outlined text-[14px]">error</span>
+                                {{ form.nombre.errors|join:", " }}
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.profesor.id_for_label }}"
+                               class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-white dark:text-slate-300 mb-3">
+                            <span class="material-symbols-outlined text-[16px] text-primary">person</span>
+                            {{ form.profesor.label }}
+                        </label>
+                        <select name="profesor"
+                                id="{{ form.profesor.id_for_label }}"
+                                class="w-full px-4 py-4 rounded-lg border text-sm bg-slate-50 dark:bg-slate-800/50
+                                {% if form.profesor.errors %}border-red-400{% else %}border-slate-200 dark:border-slate-700{% endif %}
+                                text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all">
+                            <option value="">— Sin asignar —</option>
+                            {% for value, label in form.profesor.field.choices %}
+                                {% if value %}
+                                    <option value="{{ value }}" {% if form.profesor.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>{{ label }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-white dark:text-slate-300 mb-3">
+                            <span class="material-symbols-outlined text-[16px] text-primary">group</span>
+                            {{ form.alumnos.label }}
+                        </label>
+                        <div class="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden max-h-56 overflow-y-auto bg-slate-50 dark:bg-slate-800/50">
+                            {% for checkbox in form.alumnos %}
+                                <label class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 cursor-pointer border-b border-slate-200 dark:border-slate-700/50 last:border-0">
+                                    <input type="checkbox" name="alumnos" value="{{ checkbox.data.value }}" {% if checkbox.data.selected %}checked{% endif %} class="accent-primary">
+                                    <span class="text-sm text-slate-700 dark:text-slate-300">{{ checkbox.choice_label }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 mt-10 pt-8 border-t border-slate-100 dark:border-slate-800">
+                        <button type="submit"
+                                class="flex-1 flex items-center justify-center gap-3 bg-[#10b981] hover:bg-[#059669] text-white font-bold py-4 px-6 uppercase tracking-[0.2em] text-[11px] transition-all shadow-lg active:scale-95 hover:shadow-[#10b981]/20">
+                            <span class="material-symbols-outlined text-[18px]">save</span>
+                            Guardar Curso
+                        </button>
+
+                        <a href="{% url 'portal_cursos' %}"
+                           class="flex items-center justify-center gap-3 bg-transparent hover:bg-white/5 text-[#d4ac31] text-[11px] font-bold uppercase tracking-[0.2em] py-3.5 px-6 border border-[#d4ac31] transition-all">
+                            <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                            Cancelar
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
